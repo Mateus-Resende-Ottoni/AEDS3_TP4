@@ -33,7 +33,7 @@ function getBinaryHash(key, depth) {
 function expandDirectory() {
   const newDirectory = {};
   const keys = Object.keys(directory);
-  console.log(keys)
+  //console.log(keys)
 
   if (keys.length == 1) {
     const bucket = directory[0];
@@ -52,9 +52,9 @@ function expandDirectory() {
 
 function splitBucket(pointer) {
   const oldBucket = directory[pointer];
-  console.log(directory);
-  console.log('');
-  console.log(' pointer:', pointer, ' - oldBucket:', oldBucket);
+  //console.log(directory);
+  //console.log('');
+  //console.log(' pointer:', pointer, ' - oldBucket:', oldBucket);
   const newLocalDepth = oldBucket.localDepth + 1;
   const newBucket = createBucket(newLocalDepth);
   oldBucket.localDepth = newLocalDepth;
@@ -77,10 +77,10 @@ function splitBucket(pointer) {
 }
 
 function insert(key) {
-  const hash = getBinaryHash(key, globalDepth);
+  let hash = getBinaryHash(key, globalDepth);
   const bucket = directory[hash];
-  console.log(bucket);
-  console.log(`Inserindo chave: ${key} de hash: ${hash}`);
+  //console.log(bucket);
+  //console.log(`Inserindo chave: ${key} de hash: ${hash}`);
 
   // Se número já existir, não inserir
   if (bucket.keys.includes(key)) return;
@@ -91,6 +91,7 @@ function insert(key) {
     if (bucket.localDepth === globalDepth) {
       globalDepth++;
       expandDirectory();
+      hash = getBinaryHash(key, globalDepth); // Atualizar valor hash
     }
     splitBucket(hash);
     insert(key);
